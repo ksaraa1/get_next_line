@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:13 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 10:23:58 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:05:33 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,20 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = read_file(fd, &stash);
 	if (!stash || !*stash)
-		return (get_free(&stash));
+	{
+		if (stash)
+			return (get_free(&stash));
+		return (NULL);
+	}
 	if (!find_newline(&stash))
 	{
 		line = get_strdup(&stash);
+		get_free(&stash);
 		return (line);
 	}
 	line = extract_line(&stash);
+	if (!line)
+		return (get_free(&stash));
 	stash = save_remainder(&stash);
 	return (line);
 }

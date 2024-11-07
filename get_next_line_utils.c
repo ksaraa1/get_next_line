@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:24 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 10:27:13 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:49:41 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,13 @@ char	*find_newline(char **str)
 
 char	*get_free(char **str)
 {
-	if (str && *str)
+	if (!str || !*str)
+		return (NULL);
+	while (*str)
 	{
 		free(*str);
 		*str = NULL;
 	}
+	str = NULL;
 	return (NULL);
 }
