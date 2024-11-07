@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:34 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 09:50:31 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:31:40 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100000000
+#  define BUFFER_SIZE 10
 # endif
 
 char	*get_next_line(int fd);

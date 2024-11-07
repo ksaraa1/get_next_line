@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:24 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 11:49:41 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:59:10 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,7 @@ char	*get_free(char **str)
 {
 	if (!str || !*str)
 		return (NULL);
-	while (*str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-	str = NULL;
+	free(*str);
+	*str = NULL;
 	return (NULL);
 }

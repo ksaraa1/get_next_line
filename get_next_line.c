@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:13 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 12:05:33 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 14:50:52 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,29 +97,25 @@ char	*extract_line(char **stash)
 
 char	*save_remainder(char **stash)
 {
-	char	*new_stash;
+	char	*remainder;
 	char	*newline_ptr;
-	char	*new_stash_ptr;
-	char	*stash_ptr;
+	char	*remainder_ptr;
 
-	new_stash = NULL;
-	if (find_newline(stash))
-	{
-		newline_ptr = find_newline(stash);
-		stash_ptr = find_newline(stash);
-		while (*stash_ptr)
-			stash_ptr++;
-		new_stash = malloc((sizeof(char) * (stash_ptr - newline_ptr) + 1));
-		if (!new_stash)
-			return (get_free(stash));
-		new_stash_ptr = new_stash;
-		stash_ptr = find_newline(stash) + 1;
-		while (*stash_ptr)
-			*new_stash_ptr++ = *stash_ptr++;
-		*new_stash_ptr = '\0';
-	}
+	if (!stash || !*stash)
+		return (NULL);
+	newline_ptr = find_newline(stash);
+	if (!newline_ptr)
+		return (NULL);
+	remainder = malloc((get_strlen(newline_ptr) + 2));
+	if (!remainder)
+		return (NULL);
+	remainder_ptr = remainder;
+	newline_ptr++;
+	while (*newline_ptr)
+		*remainder_ptr++ = *newline_ptr++;
+	*remainder_ptr = '\0';
 	get_free(stash);
-	return (new_stash);
+	return (remainder);
 }
 
 //  #include <fcntl.h>
