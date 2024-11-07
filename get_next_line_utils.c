@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:24 by skabouss          #+#    #+#             */
-/*   Updated: 2024/10/31 16:03:12 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:27:13 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ char	*get_strdup(char **str)
 	char	*copy;
 	char	*copy_ptr;
 
-	copy = malloc(sizeof(char) * get_strlen(*str) + 1);
+	if (!str || !*str)
+		return (NULL);
+	copy = malloc(get_strlen(*str) + 1);
 	if (!copy)
-		return (get_free(str));
+		return (NULL);
 	str_ptr = *str;
 	copy_ptr = copy;
 	while (*str_ptr)
@@ -42,25 +44,25 @@ char	*get_strdup(char **str)
 	return (copy);
 }
 
-char	*get_strjoin(char **dest, char *src)
+char	*get_strjoin(char **stash, char *buffer)
 {
-	char	*dest_ptr;
+	char	*stash_ptr;
 	char	*new_str;
 	char	*new_str_ptr;
 
-	if (!dest || !src)
+	if (!stash || !*stash || !buffer)
 		return (NULL);
-	new_str = malloc(get_strlen(*dest) + get_strlen(src) + 1);
+	new_str = malloc(get_strlen(*stash) + get_strlen(buffer) + 1);
 	if (!new_str)
-		return (get_free(dest));
+		return (get_free(stash));
 	new_str_ptr = new_str;
-	dest_ptr = *dest;
-	while (*dest_ptr)
-		*new_str_ptr++ = *dest_ptr++;
-	while (*src)
-		*new_str_ptr++ = *src++;
+	stash_ptr = *stash;
+	while (*stash_ptr)
+		*new_str_ptr++ = *stash_ptr++;
+	while (*buffer)
+		*new_str_ptr++ = *buffer++;
 	*new_str_ptr = '\0';
-	get_free(dest);
+	get_free(stash);
 	return (new_str);
 }
 
@@ -68,7 +70,7 @@ char	*find_newline(char **str)
 {
 	char	*str_ptr;
 
-	if (!*str)
+	if (!str || !*str)
 		return (NULL);
 	str_ptr = *str;
 	while (*str_ptr)
