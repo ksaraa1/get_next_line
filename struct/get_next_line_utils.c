@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:16:24 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/08 14:38:01 by skabouss         ###   ########.fr       */
+/*   Created: 2024/11/08 15:53:00 by skabouss          #+#    #+#             */
+/*   Updated: 2024/11/08 16:42:45 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,52 @@
 
 size_t	get_strlen(const char *str)
 {
-	size_t	i;
+	size_t	length;
 
+	length = 0;
 	if (!str)
 		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	while (str[length])
+		length++;
+	return (length);
 }
 
-char	*get_strdup(char **str)
+char	*get_strjoin(t_gnl *gnl, char *buffer)
 {
-	char	*str_ptr;
-	char	*copy;
-	char	*copy_ptr;
+	char	*new_str;
+	char	*stash_ptr;
+	char	*new_str_ptr;
 
-	if (!str || !*str)
+	if (!gnl->stash || !buffer)
 		return (NULL);
-	copy = malloc(get_strlen(*str) + 1);
+
+	new_str = malloc(get_strlen(gnl->stash) + get_strlen(buffer) + 1);
+	if (!new_str)
+		return (get_free(&gnl->stash), NULL);
+	stash_ptr = gnl->stash;
+	new_str_ptr = new_str;
+	while (*stash_ptr)
+		*new_str_ptr++ = *stash_ptr++;
+	while (*buffer)
+		*new_str_ptr++ = *buffer++;
+	*new_str_ptr = '\0';
+
+	get_free(&gnl->stash);
+	return (new_str);
+}
+
+char	*get_strdup(const char *str)
+{
+	const char	*str_ptr;
+	char		*copy;
+	char		*copy_ptr;
+
+	if (!str)
+		return (NULL);
+	copy = malloc(get_strlen(str) + 1);
 	if (!copy)
 		return (NULL);
-	str_ptr = *str;
+	str_ptr = str;
 	copy_ptr = copy;
 	while (*str_ptr)
 		*copy_ptr++ = *str_ptr++;
@@ -43,49 +67,27 @@ char	*get_strdup(char **str)
 	return (copy);
 }
 
-char	*get_strjoin(char **stash, char *buffer)
-{
-	char	*stash_ptr;
-	char	*new_str;
-	char	*new_str_ptr;
-
-	if (!stash || !*stash || !buffer)
-		return (NULL);
-	new_str = malloc(get_strlen(*stash) + get_strlen(buffer) + 1);
-	if (!new_str)
-		return (get_free(stash));
-	new_str_ptr = new_str;
-	stash_ptr = *stash;
-	while (*stash_ptr)
-		*new_str_ptr++ = *stash_ptr++;
-	while (*buffer)
-		*new_str_ptr++ = *buffer++;
-	*new_str_ptr = '\0';
-	get_free(stash);
-	return (new_str);
-}
-
-char	*find_newline(char **str)
+int	find_newline(char **str)
 {
 	char	*str_ptr;
 
 	if (!str || !*str)
-		return (NULL);
+		return (0);
 	str_ptr = *str;
 	while (*str_ptr)
 	{
 		if (*str_ptr == '\n')
-			return (str_ptr);
+			return (1);
 		str_ptr++;
 	}
-	return (NULL);
+	return (0);
 }
 
-char	*get_free(char **str)
+void	get_free(char **str)
 {
-	if (!str || !*str)
-		return (NULL);
-	free(*str);
-	*str = NULL;
-	return (NULL);
+	if (str || *str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }

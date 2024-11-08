@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:13 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/08 09:42:26 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:36:04 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*extract_line(char **stash)
 	line_ptr = NULL;
 	while (*stash_ptr != '\n' && *stash_ptr)
 		stash_ptr++;
-	line = malloc((sizeof(char) * (stash_ptr - *stash) + 2));
+	line = malloc((stash_ptr - *stash) + 2);
 	if (!line)
 		return (get_free(stash));
 	stash_ptr = *stash;
