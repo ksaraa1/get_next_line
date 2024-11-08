@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:24 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 12:59:10 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:06:27 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*get_strdup(char **str)
 	while (*str_ptr)
 		*copy_ptr++ = *str_ptr++;
 	*copy_ptr = '\0';
-	get_free(str);
 	return (copy);
 }
 
