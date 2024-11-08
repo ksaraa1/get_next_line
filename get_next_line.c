@@ -6,7 +6,7 @@
 /*   By: skabouss <skabouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:16:13 by skabouss          #+#    #+#             */
-/*   Updated: 2024/11/07 14:50:52 by skabouss         ###   ########.fr       */
+/*   Updated: 2024/11/08 09:42:26 by skabouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	stash = read_file(fd, &stash);
 	if (!stash || !*stash)
